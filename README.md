@@ -43,8 +43,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 
 # Configure Database
-# Update .env or rely on default: postgresql://gearguard:gearGuard@localhost/gearguard_db
-
+# Update .env
 # Run the Server
 uvicorn app.main:app --reload
 ```
@@ -70,7 +69,3 @@ The application will be available at `http://localhost:5173`.
 1.  **Reporting an Issue**: Log in as an Employee, click "Report Issue" on the dashboard, fill in the subject and equipment.
 2.  **Assigning Work**: Log in as a Manager, open a "New" request, and assign it to a Technician/Team.
 3.  **Completing a Job**: Log in as a Technician, start the job, and mark it as "Repaired" when finished.
-
-## 📝 License
-
-This project is proprietary and confidential.
