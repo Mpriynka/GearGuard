@@ -1,0 +1,130 @@
+.request-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+/* Workflow Bar (Top Right) */
+.workflow-bar {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #f8f9fa;
+    margin-left: auto;
+    /* Push to right */
+}
+
+.workflow-step {
+    padding: 8px 16px;
+    color: #666;
+    border-right: 1px solid #ddd;
+    font-size: 0.85rem;
+    cursor: pointer;
+    position: relative;
+    background: #fff;
+    user-select: none;
+}
+
+.workflow-step:last-child {
+    border-right: none;
+}
+
+.workflow-step.active {
+    background: #e3f2fd;
+    color: #1976d2;
+    font-weight: 600;
+}
+
+.workflow-step.current:after {
+    /* Triangle logic if needed, simplify for now */
+}
+
+/* Actions Bar (Below Header, Above Form) */
+.action-bar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    align-items: center;
+}
+
+/* Smart Button Box (Top Right of sheet) */
+.smart-button-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1rem;
+}
+
+.smart-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 60px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.smart-button:hover {
+    background: #f1f3f4;
+}
+
+.smart-button-icon {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+}
+
+.smart-button-label {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+/* Form Layout */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    /* Wide gap like wireframe */
+}
+
+.form-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #374151;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    /* Slightly squarer like wireframe */
+    border-bottom: 1px solid #9ca3af;
+    /* Accentuate bottom like material? wireframe is boxy */
+}
+
+.form-group input:read-only {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    color: #111;
+}
+
+.radio-group {
+    display: flex;
+    gap: 2rem;
+}
