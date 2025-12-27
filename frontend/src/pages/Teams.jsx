@@ -64,6 +64,21 @@ const Teams = () => {
         }
     };
 
+    const handleDelete = async (teamId) => {
+        if (!confirm("Delete this team?")) return;
+        try {
+            // Logic to handle team deletion - currently not in resourceService, assuming it exists or needs generic delete
+            // resourceService doesn't have deleteTeam?
+            // Checking api.js... it has delete for requests but not teams?
+            // I'll check api.js next. If missing, I'll stick to alert for now or implement it.
+            // For now let's safely alert if not implemented.
+            await resourceService.deleteTeam(teamId);
+            loadData();
+        } catch (error) {
+            alert("Failed to delete team (Not implemented or API error)");
+        }
+    };
+
     if (loading) return <MainLayout>Loading...</MainLayout>;
 
     return (

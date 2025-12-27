@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
+import { useAuth } from '../context/AuthContext';
 import { requestService } from '../services/api';
 
 const RequestList = () => {
@@ -8,6 +9,7 @@ const RequestList = () => {
     const [loading, setLoading] = useState(true);
     const [viewMode, setViewMode] = useState('table'); // 'table' or 'kanban'
     const navigate = useNavigate();
+    const { user } = useAuth();
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -33,7 +35,9 @@ const RequestList = () => {
                     <button className="btn btn-outlined" onClick={() => setViewMode(viewMode === 'table' ? 'kanban' : 'table')}>
                         {viewMode === 'table' ? 'Switch to Board' : 'Switch to List'}
                     </button>
-                    <Link to="/maintenance/new" className="btn btn-primary">New Request</Link>
+                    {user?.role !== 'TECHNICIAN' && (
+                        <Link to="/maintenance/new" className="btn btn-primary">New Request</Link>
+                    )}
                 </div>
             </div>
 

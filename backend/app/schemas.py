@@ -156,5 +156,9 @@ class EquipmentOut(EquipmentBase):
     # Or keep it separate. The requirement says "Clicking it opens a list". 
     # So a separate endpoint GET /equipment/{id}/requests is better.
     
+    # Nested objects
+    default_technician: Optional[UserOut] = None
+    category_rel: Optional[CategoryOut] = None
+
     class Config:
         from_attributes = True

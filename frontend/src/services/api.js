@@ -73,12 +73,19 @@ export const resourceService = {
         const response = await api.put(`/equipment/${id}`, data);
         return response.data;
     },
+    deleteEquipment: async (id) => {
+        await api.delete(`/equipment/${id}`);
+    },
     getTeams: async () => {
         const response = await api.get('/teams/');
         return response.data;
     },
     createTeam: async (data) => {
         const response = await api.post('/teams/', data);
+        return response.data;
+    },
+    deleteTeam: async (id) => {
+        const response = await api.delete(`/teams/${id}`);
         return response.data;
     },
 

@@ -25,13 +25,29 @@ const Equipment = () => {
         fetchEquipment();
     }, []);
 
+    const handleDelete = async (id) => {
+        if (!confirm("Are you sure you want to delete this equipment?")) return;
+        try {
+            await resourceService.deleteEquipment(id);
+            // Refresh list
+            const data = await resourceService.getEquipment();
+            setEquipment(data);
+        } catch (error) {
+            console.error(error);
+            alert("Failed to delete equipment. You may not have permission.");
+        }
+    };
+
+    // Check permissions
+    const canEdit = user?.role === 'ADMIN' || user?.role === 'MANAGER';
+
     if (loading) return <MainLayout><div>Loading...</div></MainLayout>;
 
     return (
         <MainLayout>
             <div className="dashboard-header">
                 <h2>Equipment Inventory</h2>
-                {(user?.role === 'ADMIN' || user?.role === 'MANAGER') && (
+                {canEdit && (
                     <button className="btn btn-primary" onClick={() => navigate('/equipment/new')}>Create Equipment</button>
                 )}
             </div>
@@ -41,31 +57,31 @@ const Equipment = () => {
                     <thead>
                         <tr>
                             <th>Equipment Name</th>
-                            <th>Employee</th>
                             <th>Department</th>
                             <th>Serial Number</th>
                             <th>Technician</th>
-                            <th>Equipment Category</th>
+                            <th>Category</th>
                             <th>Company</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            {canEdit && <th>Actions</th>}
                         </tr>
                     </thead>
                     <tbody>
                         {equipment.map(eq => (
                             <tr key={eq.id}>
                                 <td>{eq.name}</td>
-                                <td>Mitchell Admin</td> {/* Mock */}
                                 <td>{eq.department}</td>
                                 <td>{eq.serial_number}</td>
-                                <td>Marc Demo</td> {/* Mock */}
-                                <td>Monitors</td> {/* Mock */}
-                                <td>{user?.company_name || 'My Company (San Francisco)'}</td>
+                                <td>{eq.default_technician?.username || '-'}</td>
+                                <td>{eq.category_rel?.name || '-'}</td>
+                                <td>{user?.company_name || 'My Company'}</td>
                                 <td><span className={`status-badge ${eq.status.toLowerCase()}`}>{eq.status}</span></td>
-                                <td>
-                                    <button onClick={() => navigate(`/equipment/${eq.id}`)} className="btn-icon"><Edit size={16} /></button>
-                                    <button onClick={() => handleDelete(eq.id)} className="btn-icon"><Trash2 size={16} /></button>
-                                </td>
+                                {canEdit && (
+                                    <td>
+                                        <button onClick={() => navigate(`/equipment/${eq.id}`)} className="btn-icon"><Edit size={16} /></button>
+                                        <button onClick={() => handleDelete(eq.id)} className="btn-icon"><Trash2 size={16} /></button>
+                                    </td>
+                                )}
                             </tr>
                         ))}
                     </tbody>

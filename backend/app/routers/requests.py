@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from datetime import datetime
+from datetime import datetime, date
 from datetime import datetime
 from .. import models, schemas, database
 from . import auth
@@ -30,8 +30,8 @@ def read_requests(
 
 @router.get("/calendar", response_model=List[schemas.RequestOut])
 def read_requests_calendar(
-    start_date: datetime,
-    end_date: datetime,
+    start_date: date,
+    end_date: date,
     db: Session = Depends(database.get_db)
 ):
     # Filter by scheduled_date for Preventive, or created_at for Corrective?

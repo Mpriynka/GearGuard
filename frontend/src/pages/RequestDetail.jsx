@@ -125,10 +125,13 @@ const RequestDetail = () => {
         try {
             const payload = {
                 ...formData,
-                scheduled_date: formData.scheduled_date || null,
-                equipment_id: maintenanceFor === 'equipment' ? parseInt(formData.equipment_id) : null,
-                work_center_id: maintenanceFor === 'work_center' ? parseInt(formData.work_center_id) : null,
-                duration_minutes: parseInt(formData.duration_minutes) || 0
+                scheduled_date: formData.scheduled_date ? formData.scheduled_date : null,
+                equipment_id: (maintenanceFor === 'equipment' && formData.equipment_id) ? parseInt(formData.equipment_id) : null,
+                work_center_id: (maintenanceFor === 'work_center' && formData.work_center_id) ? parseInt(formData.work_center_id) : null,
+                duration_minutes: formData.duration_minutes ? parseInt(formData.duration_minutes) : 0,
+                technician_id: formData.technician_id ? parseInt(formData.technician_id) : null,
+                team_id: formData.team_id ? parseInt(formData.team_id) : null,
+                priority: formData.priority || 'MEDIUM'
             };
 
             if (isNew) {
@@ -155,6 +158,17 @@ const RequestDetail = () => {
         <MainLayout>
             <div className="request-header">
                 <div className="actions-left" style={{ display: 'flex', gap: '10px' }}>
+                    {/* Workflow Buttons for Technicians */}
+                    {user?.role === 'TECHNICIAN' && formData.stage === 'NEW' && (
+                        <button className="btn btn-primary" style={{ backgroundColor: '#2196F3', borderColor: '#2196F3' }} onClick={() => handleMoveStage('IN_PROGRESS')}>Start Maintenance</button>
+                    )}
+                    {user?.role === 'TECHNICIAN' && formData.stage === 'IN_PROGRESS' && (
+                        <>
+                            <button className="btn btn-success" style={{ backgroundColor: '#4CAF50', color: 'white', border: 'none' }} onClick={() => handleMoveStage('REPAIRED')}>Mark as Repaired</button>
+                            <button className="btn btn-danger" style={{ backgroundColor: '#f44336', color: 'white', border: 'none' }} onClick={() => handleMoveStage('SCRAP')}>Scrap Equipment</button>
+                        </>
+                    )}
+
                     <button className="btn btn-primary" onClick={handleSave}>Save</button>
                     <button className="btn btn-secondary" onClick={() => navigate('/maintenance')}>Discard</button>
                 </div>

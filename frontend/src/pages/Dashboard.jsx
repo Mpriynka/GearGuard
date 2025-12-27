@@ -17,7 +17,7 @@ const Dashboard = () => {
                 // Determine what requests to fetch based on role
                 let requestFilters = { limit: 5 };
                 if (user?.role === 'TECHNICIAN') {
-                    requestFilters.technician_id = user.id; // Only show assigned
+                    requestFilters.technician_id = user.id; // Show all assigned requests regardless of status
                 } else if (user?.role === 'EMPLOYEE') {
                     // Maybe filter by reporter_id if we had it in context/backend filter
                 }
@@ -118,9 +118,9 @@ const Dashboard = () => {
                                     <td>{req.title}</td>
                                     <td>{req.reporter ? req.reporter.username : `User #${req.reporter_id}`}</td>
                                     <td>{req.technician ? req.technician.username : '-'}</td>
-                                    <td>{req.equipment_id ? 'Machinery' : 'General'}</td> {/* Mock Category */}
+                                    <td>{req.equipment_id ? 'Machinery' : 'General'}</td> {/* Fallback until request includes category */}
                                     <td><span className={`badge ${req.stage.toLowerCase()}`}>{req.stage}</span></td>
-                                    <td>{req.reporter ? (req.reporter.company_name || 'My Company') : '-'}</td>
+                                    <td>{req.reporter?.company_name || user?.company_name || '-'}</td>
                                 </tr>
                             ))}
                         </tbody>
